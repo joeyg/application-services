@@ -97,6 +97,13 @@ extern crate serde;
 #[macro_use]
 extern crate log;
 
+#[macro_use]
+extern crate lazy_static;
+
+extern crate failure;
+#[macro_use]
+extern crate failure_derive;
+
 use std::{panic, thread};
 
 #[macro_use]
@@ -104,11 +111,18 @@ mod macros;
 mod string;
 mod error;
 mod into_ffi;
+// We export most of the types from this, but some constants
+// (MAX_CAPACITY) don't make sense at the top level.
+pub mod handle_map;
 
 pub use macros::*;
 pub use string::*;
 pub use error::*;
 pub use into_ffi::*;
+pub use handle_map::{
+    HandleMap,
+    Handle,
+};
 
 /// Call a callback that returns a `Result<T, E>` while:
 ///
